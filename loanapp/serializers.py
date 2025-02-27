@@ -18,10 +18,10 @@ class LoanSerializer(serializers.ModelSerializer):
     def get_payment_schedule(self, obj):
         """Generate a list of monthly installment payments with due dates"""
         payment_schedule = []
-        due_date = datetime.date.today()  # Start from today
+        due_date = datetime.date.today()
 
         for i in range(1, obj.tenure + 1):
-            due_date += datetime.timedelta(days=30)  #
+            due_date += datetime.timedelta(days=30)
             payment_schedule.append({
                 "installment_no": i,
                 "due_date": due_date.strftime("%Y-%m-%d"),
