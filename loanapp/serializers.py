@@ -21,7 +21,7 @@ class LoanSerializer(serializers.ModelSerializer):
         due_date = datetime.date.today()  # Start from today
 
         for i in range(1, obj.tenure + 1):
-            due_date += datetime.timedelta(days=30)  # Approximate 1
+            due_date += datetime.timedelta(days=30)  # Approximate
             payment_schedule.append({
                 "installment_no": i,
                 "due_date": due_date.strftime("%Y-%m-%d"),
