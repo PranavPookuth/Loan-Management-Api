@@ -1,6 +1,5 @@
 import datetime
 import random
-
 from rest_framework import serializers
 from .models import Loan
 
@@ -10,7 +9,7 @@ class LoanSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Loan
-        fields = ['loan_id', 'amount', 'tenure', 'interest_rate', 'monthly_installment',
+        fields = ['id','loan_id', 'amount', 'tenure', 'interest_rate', 'monthly_installment',
                   'total_interest', 'total_amount', 'payment_schedule']
         read_only_fields = ['loan_id', 'monthly_installment', 'total_interest',
                             'total_amount', 'payment_schedule']
