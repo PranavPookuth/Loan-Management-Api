@@ -45,7 +45,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             otp = str(random.randint(100000, 999999))
             user = User.objects.create_user(
                 username=username,
-                email=email,  # Ensure email is passed correctly
+                email=email,
                 otp=otp,
                 otp_generated_at=timezone.now(),
                 is_active=False
@@ -76,8 +76,6 @@ class OTPVerifySerializer(serializers.Serializer):
             # Log OTP timestamp for debugging
             print(f"User OTP Generated At: {user.otp_generated_at}, Current Time: {now()}")
 
-            # if user.is_otp_expired():
-            #     raise serializers.ValidationError("OTP has expired. Please request a new OTP.")
 
             if user.otp != otp:
                 raise serializers.ValidationError("Invalid OTP. Please enter the correct OTP.")
@@ -107,9 +105,9 @@ class RequestOTPSerializer(serializers.Serializer):
             raise serializers.ValidationError("No user is registered with this email.")
 
         # Generate a new OTP for the user every time they request it
-        otp = random.randint(100000, 999999)  # Generate a new 6-digit OTP
+        otp = random.randint(100000, 999999)
         user.otp = str(otp)
-        user.otp_generated_at = timezone.now()  # Optionally store the timestamp of the OTP generation
+        user.otp_generated_at = timezone.now()
         user.save()
 
         # Send OTP via email
