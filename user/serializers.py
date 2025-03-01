@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        email = validated_data.get('email')  # Ensure email is extracted
+        email = validated_data.get('email')
         username = validated_data.get('username')
 
 
