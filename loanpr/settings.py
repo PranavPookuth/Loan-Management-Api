@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'loanpr.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'loandb',
-        'USER': 'postgres',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'loanpr',
+        'USER': 'root',
         'PASSWORD': 'pranavpj',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': '127.0.0.1',  # or your database host
+        'PORT': '3306',  # MySQL default port
     }
 }
 
