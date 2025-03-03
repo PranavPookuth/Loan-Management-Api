@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-4n8(jj!w#=3=-7o(%$-+cow%sjc-)_eq6qe@ng@j)@ap*ht1ek
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']  # Or specify your Render domain
+ALLOWED_HOSTS = ["loan-management-api-yrqa.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["https://loan-management-api-yrqa.onrender.com"]
+
 
 # Ensure Django binds to the correct port for Render
 PORT = os.environ.get("PORT", "8000")
