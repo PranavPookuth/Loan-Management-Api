@@ -25,7 +25,15 @@ SECRET_KEY = 'django-insecure-4n8(jj!w#=3=-7o(%$-+cow%sjc-)_eq6qe@ng@j)@ap*ht1ek
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # Or specify your Render domain
+
+# Ensure Django binds to the correct port for Render
+PORT = os.environ.get("PORT", "8000")
+
+# Render-specific settings
+if "RENDER" in os.environ:
+    DEBUG = False
+    ALLOWED_HOSTS = ["loan-management-api-yrqa.onrender.com"]  # Your Render domain
 
 
 # Application definition
@@ -177,3 +185,7 @@ SIMPLE_JWT = {
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
 }
+import os
+
+
+
