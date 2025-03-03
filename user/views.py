@@ -29,13 +29,6 @@ class RegisterView(APIView):
                 return Response({'error': 'User with this email is already verified.'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-            # Check if OTP is expired, and regenerate if necessary
-            # if user.is_otp_expired():
-            #     otp = random.randint(100000, 999999)
-            #     user.otp = otp
-            #     user.otp_generated_at = timezone.now()  # Set the timestamp
-            #     user.save()
-
                 # Send the new OTP to the user's email
                 send_mail(
                     'OTP Verification',
@@ -107,10 +100,6 @@ class LoginView(APIView):
                 print(f"User OTP: {user.otp}, Entered OTP: {otp}")
                 print(f"OTP Generated At: {user.otp_generated_at}, Current Time: {now()}")
 
-                # Check if OTP is expired
-                # if user.is_otp_expired():
-                #     return Response({"message": "OTP has expired. Please request a new OTP."},
-                #                     status=status.HTTP_400_BAD_REQUEST)
 
                 # Check if OTP is correct
                 if user.otp != otp:

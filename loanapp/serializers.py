@@ -1,19 +1,31 @@
 import datetime
 import random
-
 from rest_framework import serializers
 from .models import Loan
-
 
 class LoanSerializer(serializers.ModelSerializer):
     payment_schedule = serializers.SerializerMethodField()
 
     class Meta:
         model = Loan
-        fields = ['loan_id', 'amount', 'tenure', 'interest_rate', 'monthly_installment',
+        fields = ['id', 'loan_id', 'amount', 'tenure', 'interest_rate', 'monthly_installment',
                   'total_interest', 'total_amount', 'payment_schedule']
         read_only_fields = ['loan_id', 'monthly_installment', 'total_interest',
                             'total_amount', 'payment_schedule']
+
+    def validate_amount(self, value):
+        """Validate loan amount (₹1,000 - ₹100,000)."""
+        if value < 1000 or value > 100000:
+            raise serializers.ValidationError("Loan amount must be between ₹1,000 and ₹100,000.")
+        return value
+
+    def validate_tenure(self, value):
+        """Validate loan tenure (3 - 24 months)."""
+        if value < 3 or value > 24:
+            raise serializers.ValidationError("Tenure must be between 3 and 24 months.")
+        if not isinstance(value, int):
+            raise serializers.ValidationError("Tenure must be a whole number.")
+        return value
 
     def get_payment_schedule(self, obj):
         """Generate a list of monthly installment payments with due dates"""
@@ -33,13 +45,11 @@ class LoanSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # Assign user from request
         validated_data['user'] = self.context['request'].user
-        # Generate unique Loan ID
-        validated_data['loan_id'] = f"LOAN{random.randint(1000, 9999)}"
 
         # Extract loan details
         amount = validated_data.get("amount")
         tenure = validated_data.get("tenure")
-        interest_rate = validated_data.get("interest_rate") / 100  # Convert percentage to decimal
+        interest_rate = validated_data.get("interest_rate") / 100  
 
         # **Loan Calculation (Monthly Compound Interest)**
         monthly_rate = interest_rate / 12
