@@ -30,7 +30,10 @@ CSRF_TRUSTED_ORIGINS = ["https://loan-management-api-yrqa.onrender.com"]
 
 
 # Ensure Django binds to the correct port for Render
+import os
+
 PORT = os.environ.get("PORT", "8000")
+
 
 # Render-specific settings
 if "RENDER" in os.environ:
@@ -83,6 +86,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'loanpr.wsgi.application'
+import os
+from django.core.wsgi import get_wsgi_application
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "loanpr.settings")
+
+application = get_wsgi_application()
 
 
 # Database
