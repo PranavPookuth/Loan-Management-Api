@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-import os
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,20 +25,7 @@ SECRET_KEY = 'django-insecure-4n8(jj!w#=3=-7o(%$-+cow%sjc-)_eq6qe@ng@j)@ap*ht1ek
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["loan-management-api-yrqa.onrender.com"]
-CSRF_TRUSTED_ORIGINS = ["https://loan-management-api-yrqa.onrender.com"]
-
-
-# Ensure Django binds to the correct port for Render
-import os
-
-PORT = os.environ.get("PORT", "8000")
-
-
-# Render-specific settings
-if "RENDER" in os.environ:
-    DEBUG = False
-    ALLOWED_HOSTS = ["loan-management-api-yrqa.onrender.com"]  # Your Render domain
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -86,42 +73,21 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'loanpr.wsgi.application'
-import os
-from django.core.wsgi import get_wsgi_application
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "loanpr.settings")
-
-application = get_wsgi_application()
 
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'loanpr',
-#         'USER': 'root',
-#         'PASSWORD': 'pranavpj',
-#         'HOST': '127.0.0.1',  # or your database host
-#         'PORT': '3306',  # MySQL default port
-#     }
-# }
-import dj_database_url
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv("postgresql://loan_management_db_0dxd_user:oyHIcbBznr31JT7BKQPT3PaharKXipr9@dpg-cv2k9jan91rc73bt82bg-a.oregon-postgres.render.com/loan_management_db_0dxd"),
-        conn_max_age=600,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'pranavpj',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
-
-
-
 
 
 # Password validation
@@ -196,7 +162,3 @@ SIMPLE_JWT = {
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
 }
-import os
-
-
-

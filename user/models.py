@@ -46,17 +46,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now=True)
 
-    groups = models.ManyToManyField(
-            "auth.Group",
-            related_name="custom_user_groups",
-            blank=True
-        )
-    user_permissions = models.ManyToManyField(
-            "auth.Permission",
-            related_name="custom_user_permissions",
-            blank=True
-        )
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -65,4 +54,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-
+    #
