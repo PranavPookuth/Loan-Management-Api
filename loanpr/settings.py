@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -78,16 +78,31 @@ WSGI_APPLICATION = 'loanpr.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'loanpr',
+#         'USER': 'root',
+#         'PASSWORD': 'pranavpj',
+#         'HOST': '127.0.0.1',  # or your database host
+#         'PORT': '3306',  # MySQL default port
+#     }
+# }
+import dj_database_url
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'loanpr',
-        'USER': 'root',
-        'PASSWORD': 'pranavpj',
-        'HOST': '127.0.0.1',  # or your database host
-        'PORT': '3306',  # MySQL default port
-    }
+    'default': dj_database_url.config(
+        default=os.getenv("postgresql://loan_management_db_0dxd_user:oyHIcbBznr31JT7BKQPT3PaharKXipr9@dpg-cv2k9jan91rc73bt82bg-a.oregon-postgres.render.com/loan_management_db_0dxd"),
+        conn_max_age=600,
+    )
 }
+
+
+
 
 
 # Password validation
